@@ -77,9 +77,8 @@ def check_results():
                 content = cell.text.strip()
                 print(f"{i}, {content}")
                 content = content.replace(" ", "")
-                content = 'll'
                 if content not in ('', '\xa0'):
-                    result = f"{department} - {years[i]}: {content}"
+                    result = f"{department} - {years[i]}"
                     current_results.add(result)
                     new_results.append(result)
 

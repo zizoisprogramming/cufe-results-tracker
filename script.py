@@ -7,10 +7,19 @@ from selenium.webdriver.chrome.options import Options
 import os
 from telegram import Bot
 import asyncio
+from datetime import datetime
+
 
 # Telegram configuration
 TELEGRAM_BOT_TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
 TELEGRAM_CHAT_ID = os.environ["TELEGRAM_CHAT_ID"]
+
+def log_results(message):
+    today = datetime.now().strftime("%Y-%m-%d")
+    log_file = f"logs_{today}.txt"
+
+    with open(log_file, 'a') as f:
+        f.write(f"[{datetime.now().strftime('%H:%M:%S')}]\n{message}\n\n")
 
 async def send_telegram_message(message):
     bot = Bot(token=TELEGRAM_BOT_TOKEN)
@@ -76,6 +85,7 @@ def check_results():
         # Find new results
         new_updates = [result for result in new_results if result not in previous_results]
         
+        log_results("logs".join(new_updates))
         if new_updates:
             message = "🎓 New Results Found!\n\n" + "\n".join(new_updates)
             print("New updates found:")

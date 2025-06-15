@@ -76,7 +76,7 @@ def check_results():
             for i, cell in enumerate(cols[1:]):
                 content = cell.text.strip()
                 print(f"{i}, {content}")
-                if content != '\xa0':
+                if content not in ('', '\xa0'):
                     result = f"{department} - {years[i]}: {content}"
                     current_results.add(result)
                     new_results.append(result)

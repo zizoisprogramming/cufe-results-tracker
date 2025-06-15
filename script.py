@@ -89,7 +89,10 @@ def check_results():
         
         log_results("logs".join(new_updates))
         if new_updates:
-            message = "🎓 New Results Found!\n\n" + "\n".join(new_updates)
+            if len(new_updates) == 1:
+                message = "🎓 ظهرت النتيجة التالية\n" + "\n".join(new_updates)
+            else:
+                message = "🎓 ظهرت النتائج التالية\n" + "\n".join(new_updates)
             print("New updates found:")
             print(message)
             # Send message to Telegram

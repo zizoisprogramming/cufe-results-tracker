@@ -40,6 +40,7 @@ def save_results(results):
     with open('previous_results.txt', 'w') as f:
         for result in sorted(results):
             f.write(f"{result}\n")
+            print("write")
 
 def check_results():
     chrome_options = Options()
@@ -74,6 +75,7 @@ def check_results():
             department = cols[0].text.strip()
             for i, cell in enumerate(cols[1:]):
                 content = cell.text.strip()
+                print(f"{i}, {content}")
                 if content != '\xa0':
                     result = f"{department} - {years[i]}: {content}"
                     current_results.add(result)

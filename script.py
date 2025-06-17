@@ -73,11 +73,11 @@ def check_results():
             if len(cols) < 5:
                 continue
             department = cols[0].text.strip()
-           for i, cell in enumerate(cols[1:]):
-               if cell.find('a'):
-                   result = f"{department} - {years[i]}"
-                   current_results.add(result)
-                   new_results.append(result)
+            for i, cell in enumerate(cols[1:]):
+                if cell.find('a'):
+                    result = f"{department} - {years[i]}"
+                    current_results.add(result)
+                    new_results.append(result)
 
 
         # Load previous results

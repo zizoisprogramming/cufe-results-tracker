@@ -60,7 +60,7 @@ def check_results():
         soup = BeautifulSoup(html, 'html.parser')
         table = soup.find('table', {'class': 'listitem'})
         rows = table.find('tbody').find_all('tr')
-        years = ["First Year", "Second Year", "Third Year", "Fourth Year"]
+        years = ["الفرقة الاولى", " الفرقة الثانية", "الفرقة الثالثة", "الفرقة الرابعة"]
         current_results = set()
         new_results = []
         first = True

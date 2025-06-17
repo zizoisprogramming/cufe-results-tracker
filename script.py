@@ -73,14 +73,12 @@ def check_results():
             if len(cols) < 5:
                 continue
             department = cols[0].text.strip()
-            for i, cell in enumerate(cols[1:]):
-                content = cell.text.strip()
-                print(f"{i}, {content}")
-                content = content.replace(" ", "")
-                if content not in ('', '\xa0'):
-                    result = f"{department} - {years[i]}"
-                    current_results.add(result)
-                    new_results.append(result)
+           for i, cell in enumerate(cols[1:]):
+               if cell.find('a'):
+                   result = f"{department} - {years[i]}"
+                   current_results.add(result)
+                   new_results.append(result)
+
 
         # Load previous results
         previous_results = load_previous_results()

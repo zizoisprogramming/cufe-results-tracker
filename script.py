@@ -92,6 +92,8 @@ def check_results():
                 message = "🎓 ظهرت النتيجة التالية\n" + "\n".join(new_updates)
             else:
                 message = "🎓 ظهرت النتائج التالية\n" + "\n".join(new_updates)
+
+            message += "\n📎 للاطلاع على النتيجة\nhttps://std.eng.cu.edu.eg/"
             print("New updates found:")
             print(message)
             # Send message to Telegram

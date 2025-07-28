@@ -76,6 +76,7 @@ def check_results():
             for i, cell in enumerate(cols[1:]):
                 if cell.find('a'):
                     result = f"{department} - {years[i]}"
+                    print(result)
                     current_results.add(result)
                     new_results.append(result)
 

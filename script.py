@@ -83,7 +83,7 @@ def check_results():
 
         # Load previous results
         previous_results = load_previous_results()
-        
+        print(previous_results)
         # Find new results
         new_updates = [result for result in new_results if result not in previous_results]
         

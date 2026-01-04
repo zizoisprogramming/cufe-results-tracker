@@ -48,46 +48,64 @@ def check_results():
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
     
-    # Use system ChromeDriver
     service = Service('/usr/bin/chromedriver')
     driver = webdriver.Chrome(service=service, options=chrome_options)
     
     try:
         driver.get("http://www.results.eng.cu.edu.eg/")
-        time.sleep(5)  # Wait for page to load
+        time.sleep(5)  
 
         html = driver.page_source
         soup = BeautifulSoup(html, 'html.parser')
+
         table = soup.find('table', {'class': 'listitem'})
+
+        if not table:
+            return
+        
         rows = table.find('tbody').find_all('tr')
-        years = ["الفرقة الاولى", " الفرقة الثانية", "الفرقة الثالثة", "الفرقة الرابعة"]
+        if not rows:
+            return
+
+        years = ["الفرقة الاولى", "الفرقة الثانية", "الفرقة الثالثة", "الفرقة الرابعة"]
+        edady_years = ["المجموعة الاولى", "المجموعة الثانية"]
         current_results = set()
-        new_results = []
-        first = True
-        
-        for row in rows:
-            if first:
-                first = False
-                continue
+        appeared_results = 0
+        total_results = 0
+
+        for row in rows[1:]:
+
             cols = row.find_all('td')
-            if len(cols) < 5:
-                continue
-            department = cols[0].text.strip()
-            for i, cell in enumerate(cols[1:]):
-                if cell.find('a'):
-                    result = f"{department} - {years[i]}"
-                    print(result)
-                    current_results.add(result)
-                    new_results.append(result)
+            if len(cols) == 2:
+                department = cols[0].text.strip()
+                for i, cell in enumerate(cols[1:]):
+                    total_results += 1
+                    if cell.find('a'):
+                        result = f"{department} - {edady_years[i]}"
+                        print(result)
+                        current_results.add(result)
+                        appeared_results += 1
+            else:
+                department = cols[0].text.strip()
+                for i, cell in enumerate(cols[1:]):
+                    total_results += 1
+                    if cell.find('a'):
+                        result = f"{department} - {years[i]}"
+                        print(result)
+                        current_results.add(result)
+                        appeared_results += 1
 
-
-        # Load previous results
         previous_results = load_previous_results()
-        print(previous_results)
-        # Find new results
-        new_updates = [result for result in new_results if result not in previous_results]
+        message = ''
         
-        log_results("logs".join(new_updates))
+        if len(current_results) < len(previous_results):
+            time.sleep(60 * 10)
+            previous_results = []
+
+        new_updates = current_results - previous_results
+
+        log_results("\n".join(new_updates))
+
         if new_updates:
             if len(new_updates) == 1:
                 message = "🎓 ظهرت النتيجة التالية\n" + "\n".join(new_updates)
@@ -97,14 +115,15 @@ def check_results():
             message += "\n📎 للاطلاع على النتيجة\nhttps://std.eng.cu.edu.eg/"
             print("New updates found:")
             print(message)
-            # Send message to Telegram
             asyncio.run(send_telegram_message(message))
-            # Save all current results
-            save_results(current_results)
         else:
             print("❌ No new updates found.")
-            # Still save current results to maintain the latest state
-            save_results(current_results)
+
+        save_results(current_results)
+
+        if appeared_results == total_results:
+            print("🎉 All results have appeared.")
+
     finally:
         driver.quit()
 

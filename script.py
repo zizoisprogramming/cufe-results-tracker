@@ -82,8 +82,7 @@ def check_results():
                     total_results += 1
                     if cell.find('a'):
                         result = f"{department} - {edady_years[i]}"
-                        print(result)
-                        current_results.add(result)
+                        current_results.add(result.strip())
                         appeared_results += 1
             else:
                 department = cols[0].text.strip()
@@ -91,8 +90,7 @@ def check_results():
                     total_results += 1
                     if cell.find('a'):
                         result = f"{department} - {years[i]}"
-                        print(result)
-                        current_results.add(result)
+                        current_results.add(result.strip())
                         appeared_results += 1
 
         previous_results = load_previous_results()

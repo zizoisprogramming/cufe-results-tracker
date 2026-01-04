@@ -71,14 +71,18 @@ def check_results():
         current_results = set()
         appeared_results = 0
         total_results = 0
+        empty_cells = 0
 
         for row in rows[1:]:
 
             cols = row.find_all('td')
-            if len(cols) == 2:
+            if len(cols) == 3:
                 department = cols[0].text.strip()
                 for i, cell in enumerate(cols[1:]):
                     total_results += 1
+                    if cell.get('class') != None and cell.get('class') == ['emptyCells']:
+                        empty_cells += 1
+                        
                     if cell.find('a'):
                         result = f"{department} - {edady_years[i]}"
                         current_results.add(result.strip())
@@ -87,6 +91,9 @@ def check_results():
                 department = cols[0].text.strip()
                 for i, cell in enumerate(cols[1:]):
                     total_results += 1
+                    if cell.get('class') != None and cell.get('class') == ['emptyCells']:
+                        empty_cells += 1
+
                     if cell.find('a'):
                         result = f"{department} - {years[i]}"
                         current_results.add(result.strip())
@@ -118,7 +125,7 @@ def check_results():
 
         save_results(current_results)
 
-        if appeared_results == total_results:
+        if appeared_results == total_results - empty_cells:
             print("🎉 All results have appeared.")
 
     finally:

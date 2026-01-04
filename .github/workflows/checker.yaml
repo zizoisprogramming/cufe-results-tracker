@@ -29,22 +29,14 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
+          pip install selenium==4.12.0  # ensure Selenium 4.12+ for Selenium Manager
 
       - name: Install Google Chrome
         run: |
           sudo apt update
-          sudo apt install -y wget unzip curl jq gnupg
+          sudo apt install -y wget unzip curl gnupg
           wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
           sudo apt install -y ./google-chrome-stable_current_amd64.deb
-
-      - name: Install ChromeDriver
-        run: |
-          CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+' | head -1)
-          CHROMEDRIVER_URL=$(curl -s https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json | jq -r --arg ver "$CHROME_VERSION" '.channels.Stable.downloads.chromedriver[] | select(.platform == "linux64") | .url')
-          wget -O chromedriver.zip "$CHROMEDRIVER_URL"
-          unzip chromedriver.zip
-          sudo mv chromedriver-linux64/chromedriver /usr/bin/chromedriver
-          sudo chmod +x /usr/bin/chromedriver
 
       - name: Run checker script
         env:

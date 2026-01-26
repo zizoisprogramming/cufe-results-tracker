@@ -104,7 +104,7 @@ def check_results():
         
         if len(current_results) < len(previous_results):
             time.sleep(60 * 10)
-            previous_results = []
+            previous_results = set()
 
         new_updates = current_results - previous_results
 

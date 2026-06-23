@@ -53,6 +53,13 @@ def check_results():
     try:
         driver.get("http://www.results.eng.cu.edu.eg/")
         time.sleep(5)  
+        time.sleep(5)
+
+        print("Current URL:", driver.current_url)
+        print("Page title:", driver.title)
+        
+        with open("page.html", "w", encoding="utf-8") as f:
+            f.write(driver.page_source)
 
         print("fetching")
         html = driver.page_source

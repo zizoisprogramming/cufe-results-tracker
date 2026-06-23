@@ -52,21 +52,16 @@ def check_results():
     
     try:    
 
-        for i in range(5):
-            try:
-                driver.get("http://www.results.eng.cu.edu.eg/")
-                print("Attempt", i + 1)
-                print(driver.title)
-                print(driver.page_source)
+        driver.get("http://www.results.eng.cu.edu.eg/")
+        time.sleep(15)
 
-                if "cannot be displayed" not in driver.title.lower():
-                    break
-        
-                time.sleep(30)
-        
-            except Exception as e:
-                print(e)
+        print(driver.title)
+        print(driver.page_source)
 
+        if "cannot be displayed" not in driver.title.lower():
+            return
+
+        
         print("fetching")
         html = driver.page_source
         soup = BeautifulSoup(html, 'html.parser')
@@ -75,11 +70,9 @@ def check_results():
 
         if not table:
             return
-        print("hello")
         rows = table.find('tbody').find_all('tr')
         if not rows:
             return
-        print("hello2")
         years = ["الفرقة الاولى", "الفرقة الثانية", "الفرقة الثالثة", "الفرقة الرابعة"]
         edady_years = ["المجموعة الاولى", "المجموعة الثانية"]
         current_results = set()

@@ -62,11 +62,11 @@ def check_results():
 
         if not table:
             return
-        
+        print("hello")
         rows = table.find('tbody').find_all('tr')
         if not rows:
             return
-
+        print("hello2")
         years = ["الفرقة الاولى", "الفرقة الثانية", "الفرقة الثالثة", "الفرقة الرابعة"]
         edady_years = ["المجموعة الاولى", "المجموعة الثانية"]
         current_results = set()
@@ -75,7 +75,7 @@ def check_results():
         empty_cells = 0
 
         for row in rows[1:]:
-
+            print("hello3")
             cols = row.find_all('td')
             if len(cols) == 3:
                 department = cols[0].text.strip()

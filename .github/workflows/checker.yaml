@@ -2,7 +2,7 @@ name: CU Results Checker
 
 on:
   schedule:
-    - cron: '5 * * * *'  
+    - cron: '* * * * *'  
   workflow_dispatch:         # allows manual runs
 
 jobs:

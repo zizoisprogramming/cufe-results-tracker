@@ -2,13 +2,12 @@ name: CU Results Checker
 
 on:
   schedule:
-    - cron: '* * * * *'  
+    - cron: '1 * * * *'  
   workflow_dispatch:         # allows manual runs
 
 jobs:
   check_results:
-    runs-on: ubuntu-latest
-
+    runs-on: self-hosted
     steps:
       - name: Checkout code
         uses: actions/checkout@v3

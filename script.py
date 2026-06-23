@@ -54,6 +54,7 @@ def check_results():
         driver.get("http://www.results.eng.cu.edu.eg/")
         time.sleep(5)  
 
+        print("fetching")
         html = driver.page_source
         soup = BeautifulSoup(html, 'html.parser')
 
@@ -98,9 +99,11 @@ def check_results():
                         result = f"{department} - {years[i]}"
                         current_results.add(result.strip())
                         appeared_results += 1
+            print(appeared_results)
 
         previous_results = load_previous_results()
         message = ''
+        print(previous_results)
         
         if len(current_results) < len(previous_results):
             time.sleep(60 * 10)

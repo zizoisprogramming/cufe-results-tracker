@@ -50,16 +50,22 @@ def check_results():
     
     driver = webdriver.Chrome(options=chrome_options)
     
-    try:
-        driver.get("http://www.results.eng.cu.edu.eg/")
-        time.sleep(30)  
+    try:    
 
-        print("Current URL:", driver.current_url)
-        print("Page title:", driver.title)
-        print(driver.page_source)
+        for i in range(5):
+            try:
+                driver.get("http://www.results.eng.cu.edu.eg/")
+                print("Attempt", i + 1)
+                print(driver.title)
+                print(driver.page_source)
+
+                if "cannot be displayed" not in driver.title.lower():
+                    break
         
-        with open("page.html", "w", encoding="utf-8") as f:
-            f.write(driver.page_source)
+                time.sleep(30)
+        
+            except Exception as e:
+                print(e)
 
         print("fetching")
         html = driver.page_source

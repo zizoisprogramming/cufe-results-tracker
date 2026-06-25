@@ -55,7 +55,7 @@ def check_results():
         driver.get("http://www.results.eng.cu.edu.eg/")
         time.sleep(15)
 
-        if "cannot be displayed" not in driver.title.lower():
+        if "cannot be displayed" in driver.title.lower():
             return
 
         

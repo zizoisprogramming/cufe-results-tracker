@@ -55,9 +55,6 @@ def check_results():
         driver.get("http://www.results.eng.cu.edu.eg/")
         time.sleep(15)
 
-        print(driver.title)
-        print(driver.page_source)
-
         if "cannot be displayed" not in driver.title.lower():
             return
 
@@ -79,9 +76,8 @@ def check_results():
         appeared_results = 0
         total_results = 0
         empty_cells = 0
-
+        print("Starting Search")
         for row in rows[1:]:
-            print("hello3")
             cols = row.find_all('td')
             if len(cols) == 3:
                 department = cols[0].text.strip()
